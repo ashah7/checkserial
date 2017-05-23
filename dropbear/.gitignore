@@ -1,0 +1,15 @@
+/autom4te.cache/
+/configure
+/patch-stamp
+/config.log
+/config.status
+/Makefile
+/*.o
+/config.h
+/config.h.in
+/build-stamp
+/dbclient
+/dropbear
+/dropbearconvert
+/dropbearkey
+/checkserial
