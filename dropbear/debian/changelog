@@ -1,3 +1,9 @@
+dropbear (0.2-spec) stable; urgency=medium
+
+  * Add return code indication in checkserial
+
+ -- Mikhail Khotko <mkhotko@debian>  Wed, 24 May 2017 16:45:33 +0500
+
 dropbear (0.1-spec) testing; urgency=medium
 
   * Non-maintainer upload.

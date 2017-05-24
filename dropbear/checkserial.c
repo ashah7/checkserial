@@ -2,30 +2,26 @@
 
 int main(int argc, char const *argv[])
 {
-  if (argc != 2) exit(1);
+  if (argc != 2) exit(255);
 
-  char cmdbuf[1024];
-  memset(cmdbuf, 0, 1024);
-
-  snprintf(cmdbuf,
+  char remotecmdbuf[1024];
+  memset(remotecmdbuf, 0, 1024);
+  snprintf(remotecmdbuf,
            1024,
-           "if [ -d /home/Radio/%s ];"
-           "then echo 'check has been verified' > /home/Radio/%s/%s.log;"
-           "fi", argv[1], argv[1], argv[1]);
+           "[ -d "VERIFYDIR"%s ] && echo \'"VERIFYSTRING"\'>"VERIFYDIR"%s/%s.log && echo ok || true",
+           argv[1], argv[1], argv[1]);
 
-  char *eargv [8];
-  eargv[0] = "/usr/bin/dbclient";
-  eargv[1] = "-y";
-  eargv[2] = "-y";
-  eargv[3] = "-l";
-  eargv[4] = "Radio";
-  eargv[5] = "185.181.9.50";
-  eargv[6] = cmdbuf;
-  eargv[7] = NULL;
+  char localcmdbuf[1024];
+  memset(localcmdbuf, 0, 1024);
+  snprintf(localcmdbuf,
+           1024,
+           "vc=$(dbclient -y -y -l "LOGIN" "SERVER" \"%s\" 2>/dev/null); rc=$?; [ $rc -ne 0 ] && exit $rc; [ z$vc = zok ] || exit 2; ",
+           remotecmdbuf);
 
-  char *envp [] = { "DROPBEAR_PASSWORD=Radio123", NULL };
+  char *eargv [] = { "/bin/sh", "-c", localcmdbuf, NULL };
+  char *envp [] = { "DROPBEAR_PASSWORD="PASSWORD, NULL };
 
-  int rc = execve("/usr/bin/dbclient", eargv, envp);
+  execve("/bin/sh", eargv, envp);
 
-  return rc;
+  return 0;
 }
