@@ -6,5 +6,5 @@
 #define LOGIN "Radio"
 #define SERVER "185.181.9.50"
 #define PASSWORD "Radio123"
-#define VERIFYDIR "/home/"LOGIN"/hRadio/"
+#define VERIFYDIR "/home/"LOGIN"/tRadio/"
 #define VERIFYSTRING "check has been verified"
