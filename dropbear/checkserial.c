@@ -2,8 +2,14 @@
 
 int main(int argc, char const *argv[])
 {
-  if (argc != 2) exit(255);
+//  if (argc != 2) exit(255);
 
+  //gather serial information
+FILE *file = popen("echo $(hostname)-$(cat /proc/cpuinfo | grep Serial | awk '{print $3}')", "r");
+char serial[1000];
+fgets(serial,1000,file);
+  argv[1]=serial;  
+  
   char remotecmdbuf[1024];
   memset(remotecmdbuf, 0, 1024);
   snprintf(remotecmdbuf,
